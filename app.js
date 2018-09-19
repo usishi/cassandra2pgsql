@@ -180,6 +180,7 @@ let get_rows = () => {
 
         if (pkey_value_import_control != pkey_value_import) {
           insert_cols = insert_cols.replace("," + pkey_column, "")
+          insert_cols = insert_cols.replace(pkey_column + ",", "")
         }
 
         insert_cmd += `INSERT INTO ${target_table} (${insert_cols.substring(0, insert_cols.length-1)}) VALUES `
@@ -232,7 +233,7 @@ let insert_rows = (insert_cmd) => {
   return new Promise((fulfill, reject) => {
     // insert cumlesi dosyaya kaydediliyor    
     let app_dir = path.dirname(require.main.filename);
-    let file_name = `/${source_table}2${target_table}.sql`
+    let file_name = `/bh_${source_table}2${target_table}.sql`
     fs.writeFile(app_dir + file_name, insert_cmd, function(err) {
       if (err) {
         console.log(err);
